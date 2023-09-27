@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spam Detector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        .message {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Spam Detector</h1>
+        <form action="#" method="post">
+            <label for="message">Type your message:</label>
+            <input type="text" name="message" id="message" required>
+            <br><br>
+            <input type="submit" value="Check for Spam">
+        </form>
+        <div class="message">
+            <?php
+            if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                $userMessage = $_POST["message"];
+                $spamKeywords = ["buy", "discount", "sale", "win", "free", "money"];
+                
+                $isSpam = false;
+                
+                foreach ($spamKeywords as $keyword) {
+                    if (stripos($userMessage, $keyword) !== false) {
+                        $isSpam = true;
+                        break;
+                    }
+                }
+                
+                if ($isSpam) {
+                    echo "This message is likely spam.";
+                } else {
+                    echo "This message appears to be a normal human message.";
+                }
+            }
+            ?>
+        </div>
+    </div>
+</body>
+</html>
